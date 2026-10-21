@@ -1,5 +1,4 @@
 # Feirando: An E-commerce Marketplace Analysis
-### Do late deliveries hurt customer reviews?
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![pandas](https://img.shields.io/badge/pandas-150458?style=flat&logo=pandas&logoColor=white)
@@ -9,8 +8,12 @@
 ![Domain](https://img.shields.io/badge/Domain-E--commerce-112846?style=flat)
 ![Status](https://img.shields.io/badge/Status-Complete-2E7D32?style=flat)
 
-**[View the dashboard on Tableau Public](https://public.tableau.com/app/profile/mohammed.adnan2171/viz/FeirandoDashboard/Dashboard1)**
+**[View the dashboard](https://public.tableau.com/app/profile/mohammed.adnan2171/viz/FeirandoDashboard/Dashboard1)**
 
+## Business Problem
+Feirando is a Brazilian online marketplace where reviews decide which sellers shoppers trust and buy from. About 1 in 15 delivered orders arrives after the promised date, and those orders seem to get much weaker reviews. Leadership needs to know how much late deliveries hurt customer satisfaction, and where to act first: sellers, carriers or specific regions.
+
+## Background
 Feirando is a fictional Brazilian online marketplace I created so I could work the way an analyst would inside a real company: starting from a business problem, not just a dataset. The data is the public [Olist Brazilian E-Commerce dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) (2016–2018), used with credit to Olist.
 
 ## In one sentence
