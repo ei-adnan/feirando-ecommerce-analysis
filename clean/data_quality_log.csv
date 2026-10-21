@@ -1,0 +1,27 @@
+table,issue,rows_affected,rule,reason
+orders,Status counts check,0,No change; 8 statuses match profiling,Confirms load is complete before cleaning
+orders,Delivered orders with no customer delivery date,8,Keep rows; exclude from delivery analysis via in_delivery_scope flag,Only one field missing; carrier dates still valid for seller-handover analysis (H3)
+orders,Canceled orders with a customer delivery date,6,Keep rows; stay out of delivery scope (status not delivered),Likely canceled after delivery (refusal/return); KPI defines on-time rate on delivered orders only; 6 rows cannot move the rate
+orders,Delivered orders with no carrier date,2,"Keep rows; 1 already out of delivery scope (overlap with Issue 2), 1 stays in scope; exclude both from seller-vs-carrier attribution (H3)",Customer on-time check needs only delivered and estimated dates; carrier date only needed to split seller vs carrier delay
+orders,Orders with no payment approval date,160,"No change. 141 canceled + 5 created = normal (payment never cleared). 14 delivered = logging gap; stay in delivery scope, exclude from any approval-based timing",On-time check does not use approval date; delivered orders must have been paid
+orders,Sparse months outside analysis window,349,Keep rows; flag in_window = purchases Jan 2017 to Aug 2018,"2016 launch months and Sep-Oct 2018 too thin; Jan 2017 (800) kept despite <1000 threshold: ~±2pp precision, longer follow-up for H5"
+orders,Late/on-time flag created,0,delay_days = delivered calendar day - promised day; is_late = delay_days > 0; only for in_delivery_scope rows,"Promised date has no time of day, so same-day delivery at 18:00 counts as on time"
+order_items,Duplicate order_id + order_item_id,0,No change,Grain confirmed: one row per item within an order
+order_items,Orders with no item rows,775,"No change; none in delivery scope (603 unavailable, 164 canceled, 8 other)",Items removed when seller could not fulfil; contribute 0 to GMV automatically
+order_items,shipping_limit_date after 2018 (up to Apr 2020),4,Keep rows; set date to NaT; flag in shipping_limit_flag,"Only the date is impossible; price, seller and delivery data valid"
+order_items,Price/freight sanity check,383,No change; no zero/negative prices; 383 items with freight 0 kept,Freight 0 assumed to be free-shipping promotion (cannot verify); extremes plausible
+order_items,Orders with items from more than one seller,1278,Keep rows; flag multi_seller on orders; exclude from seller-level analysis (H3) only,"One delivery date per order, so lateness cannot be attributed to one seller; blaming all would be unfair; 1,272 in analysis set, ~13 late"
+order_reviews,Exact duplicate rows,0,No change; none found,"Step 8 '814 duplicates' were repeated review_ids on different orders, not copies; data dictionary to be corrected"
+order_reviews,Orders with more than one review,547,Keep only the latest review per order (by review_answer_timestamp),Latest answer is the shopper's final opinion; one review per order prevents double-counting in H1/H2
+order_payments,Payments vs item price + freight,249,No change; 99.75% of orders reconcile within 1 BRL,"Differences consistent with instalment interest (+) and vouchers (-); GMV calculated from item price, not payments"
+customers,Real shoppers vs customer_id,0,"No change; 96,096 shoppers, 2,997 (3.1%) with more than one order",customer_id is new per order; customer_unique_id used for shopper counts and H5
+customers,State values,0,"No change; 27 valid states; SP 42%, Southeast 66% of orders",Valid codes; concentration relevant for H4 (cross-state routes)
+geolocation,Points outside Brazil,42,Remove rows,Geocoding matched same-named towns abroad; true coordinates unknown; each zip has other valid points
+geolocation,~50 points per zip,981111,Aggregate to one point per zip: median lat/lng,"Joins need one row per zip, otherwise order rows multiply ~50x; median resists stray points"
+geolocation,Customer/seller zips with no location,286,No change; 279 customers and 7 sellersexcluded from distance bands only,Zips absent from geolocation; same-state vs cross-state test uses state columns and is unaffected
+products,Misspelled column names,0,Rename 'lenght' to 'length' in 2 columns,"Prevents typos and confusion in later SQL, Python and Tableau work"
+products,Products with no category or listing details,610,Keep rows; label category 'unknown'; description/photos stay missing,"1,603 sold items (1.4%) use these products; deleting would break joins and drop real orders"
+product_category_translation,Categories with no English name,3,"Add 3 rows: pc_gamer, portateis_cozinha..., unknown",Every product needs an English category for analysis and dashboard; translations written by analyst
+products,English category added,0,Add product_category_name_english via left join to translation table,Avoids a join in every later step; translation table is small and fixed
+products,Weight 0 g (4) and missing weight/dimensions (2),6,Set 0 g to missing; keep all rows; 2 already-missing left as is,Physical products cannot weigh 0 g (all bed_bath_table); 0 would distort weight averages
+all tables,Final validation,0,18 cross-table checks passed,"Row counts, unique keys, join keys in both directions, GMV unchanged vs raw"
