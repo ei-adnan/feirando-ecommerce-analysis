@@ -1,12 +1,13 @@
 # Feirando: An E-commerce Marketplace Analysis
 
+![Domain](https://img.shields.io/badge/Domain-E--commerce-112846?style=flat)
+![SQL](https://img.shields.io/badge/SQL-Advanced%20Analytics-blue?style=flat-square)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![pandas](https://img.shields.io/badge/pandas-150458?style=flat&logo=pandas&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-DuckDB-FFF000?style=flat&logo=duckdb&logoColor=black)
-![Tableau](https://img.shields.io/badge/Tableau-E97627?style=flat&logo=tableau&logoColor=white)
+![Tableau](https://img.shields.io/badge/Tableau-Interactive%20Dashboard-purple?style=flat-square)
 ![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat&logo=jupyter&logoColor=white)
-![Domain](https://img.shields.io/badge/Domain-E--commerce-112846?style=flat)
 ![Status](https://img.shields.io/badge/Status-Complete-2E7D32?style=flat)
+
 
 **[View the dashboard](https://public.tableau.com/app/profile/mohammed.adnan2171/viz/FeirandoDashboard/Dashboard1)**
 
